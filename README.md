@@ -1,6 +1,8 @@
 
 
-<img src="assets/logo.svg" style="display: block; margin: 0 auto;">
+<div align="center">
+  <img src="assets/logo.svg" alt="Logo">
+</div>
 
 <h5 align="center">
     <p>
@@ -20,7 +22,7 @@ pip install solow
 or
 
 ```
-pip install git+https://github.com/MTandHJ/solo.git
+pip install git+https://github.com/MTandHJ/SOLO.git
 ```
 
 ## Usage
