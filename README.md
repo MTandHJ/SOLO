@@ -1,7 +1,7 @@
 
 
 <div align="center">
-  <img src="assets/logo.svg" alt="Logo" style="max-width: 85%; height: auto;">
+  <img src="assets/logo.svg" alt="Logo">
 </div>
 
 <h5 align="center">
