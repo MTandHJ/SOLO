@@ -7,7 +7,7 @@
 <h5 align="center">
     <p>
         <a href="">Paper</a> |
-        <a href="https://pytorch.org/">PyTorch >= 2.2</a> |
+        <a href="https://pytorch.org/">PyTorch >= 2.3</a> |
         <a href="https://github.com/pytorch/ao/tree/main">torchao >= 0.7.0</a>
     </p>
 </h4>
@@ -36,7 +36,7 @@ optimizer = AdamWQ(
     lr = 0.001,
     weight_decay = 0.,
     betas = (0.8, 0.999),
-    bits = (4, 2),
+    bits = (4, 2), # (4 bits for signed, 2 bits for unsigned)
     quantile = 0.1,
     block_sizes = (128, 128),
     quantizers = ('de', 'qema'),

@@ -2,17 +2,15 @@
 
 import math
 from typing import Any, Dict, Tuple
-
 import torch
-from torch import Tensor
-from torch.distributed._tensor import DTensor
-from .adamw import Optimizer, QUANTIZERS, PACKABLE, init_adaq_generator
+
+from .base import LowBitOptim
 
 Eps2 = Tuple[float, float]
 ParamGroup = Dict[str, Any]
 
 
-class AdafactorQ(Optimizer):
+class AdafactorQ(LowBitOptim):
 
     r"""
     Adafactor with Quantized states.
@@ -90,24 +88,16 @@ class AdafactorQ(Optimizer):
             scale_parameter=scale_parameter,
             relative_step=relative_step,
             warmup_init=warmup_init,
-            quantile=quantile
         )
-        super(AdafactorQ, self).__init__(params, defaults)
 
-        self.bits = bits
-        self.quantizers = quantizers
-        self.block_sizes = (int(block_sizes[0]), int(block_sizes[1]))
-        self.packable_sizes = (PACKABLE[bits[0]], PACKABLE[bits[1]])
-        self.min_quantizable_tensor_size = min_quantizable_tensor_size
-
-        init_adaq_generator()
-
-        print(self)
-
-    def __str__(self):
-        return f"AdamfactorQ: [{self.quantizers[0]}-{self.quantizers[1]}]" \
-                f"[{self.bits[0]}-{self.bits[1]}]" \
-                f"[{self.block_sizes[0]}-{self.block_sizes[1]}]"
+        super().__init__(
+            params, defaults,
+            bits=bits,
+            quantile=quantile,
+            block_sizes=block_sizes,
+            quantizers=quantizers,
+            min_quantizable_tensor_size=min_quantizable_tensor_size
+        )
 
     def _get_lr(self, param_group: ParamGroup, param_state) -> float:
         rel_step_sz = param_group["lr"]
@@ -147,43 +137,7 @@ class AdafactorQ(Optimizer):
         c_factor = exp_avg_sq_col.unsqueeze(-2).rsqrt()
         torch.mul(r_factor, c_factor, out=output)
 
-    def _init_state(self, p: Tensor, signed: bool, quantile: float):
-        local_p = p.to_local() if isinstance(p, DTensor) else p
-
-        # follow bitsandbytes, only quantize tensors >= 4096 values
-        state_idx = 0 if signed else 1
-        block_size = self.block_sizes[state_idx]
-        packable_size = self.packable_sizes[state_idx]
-        quantizer = QUANTIZERS[self.bits[state_idx]][self.quantizers[state_idx]]
-        if quantizer is not None \
-            and local_p.numel() >= self.min_quantizable_tensor_size \
-            and local_p.numel() % packable_size == 0:
-            out = quantizer.zeros(
-                shape=p.shape,
-                signed=signed,
-                block_size=block_size,
-                device=p.device,
-                quantile=quantile
-            )
-        else:
-            out = torch.zeros_like(local_p)
-
-        # wrap subclass in DTensor as needed
-        # NOTE: local tensor may have different shapes across ranks.
-        # this happens when the 1st dim is not divisible by WORLD_SIZE.
-        # thus, we must supply shape (and stride) to DTensor.from_local()
-        if isinstance(p, DTensor):
-            out = DTensor.from_local(
-                local_tensor=out,
-                device_mesh=p.device_mesh,
-                placements=p.placements,
-                run_check=False,
-                shape=p.shape,
-                stride=p.stride(),
-            )
-
-        return out
-
+    @torch.no_grad()
     def step(self, closure = None):
         r"""Performs a single optimization step.
 

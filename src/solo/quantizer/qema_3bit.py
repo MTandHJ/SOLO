@@ -129,9 +129,9 @@ def _(func, types, args, kwargs):
         dst.scale.copy_(src.scale)
         dst.alpha.copy_(src.alpha)
     elif isinstance(dst, QemaOptimState3bit):
-        scaled_src, scale, alpha = scale_tensor(src.view(-1), dst.block_size, dst.quantile)
+        scaled_src, scale, xp = scale_tensor(src.view(-1), dst.block_size, dst.quantile)
         dst.alpha.copy_(
-            alpha.pow(1 / NUMS)
+            xp.pow(1 / NUMS)
         )
         codes = quantize_with_alpha(scaled_src, dst.alpha, BITS)
         dst.codes.copy_((codes[::2] << 4) | codes[1::2])  # packing

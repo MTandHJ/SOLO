@@ -6,15 +6,44 @@ from torch import Tensor
 
 
 def scale_tensor(input: Tensor, block_size: int, quantile: float, eps: float = 1.e-12):
+    r"""
+    Normalize the tensor and find the p-quantile
+
+    Parameters:
+    -----------
+    input: torch.Tensor
+    block_size: int
+
+    Returns:
+    --------
+    Normalized tensor: float32
+    Scale factor: float32
+    xp: float32, p-quantile
+    """
     shape = input.shape
 
     input = input.view(-1, block_size)
     scale = input.amax(-1).clamp_min(eps)
-    alpha = input.quantile(quantile, -1) / scale
+    xp = input.quantile(quantile, -1) / scale
     input = input / scale.view(-1, 1)
-    return input.view(shape), scale, alpha
+    return input.view(shape), scale, xp
 
 def quantize_with_alpha(input: Tensor, alpha: Tensor, bits: int = 4):
+    r"""
+    Logarithmic quantization with a specific base alpha.
+
+    Parameters:
+    -----------
+    input: torch.Tensor, (M, N)
+        N: the block size
+    alpha: torch.Tensor (M,)
+        The logarithmic bases
+    bits: int
+
+    Returns:
+    --------
+    quantized: uint8
+    """
     shape = input.shape
 
     logalpha = alpha.log2().view(-1, 1)
@@ -126,6 +155,7 @@ def quantize_8bit_with_qmap(input: Tensor, qmap: Tensor, stochastic_rounding: bo
     return codes.to(torch.uint8)
 
 def init_adaq_generator():
+    r"""Set global generator for the standard DDP."""
     global adaq_generator
 
     if torch.distributed.is_initialized():
@@ -138,6 +168,7 @@ def init_adaq_generator():
     adaq_generator.manual_seed(seed.item())
 
 def set_block_size(n_elems: int, block_size: int) -> int:
+    r"""Find a divisible block size"""
     block_size = n_elems if block_size <= 0 else block_size
     block_size = n_elems if n_elems <= block_size else block_size
     for b in range(block_size, 0, -1):

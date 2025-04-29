@@ -1,18 +1,11 @@
 
 
-from typing import Tuple
-
 import torch, math
 
 from .adamw import AdamWQ
 
 
 class AdamQ(AdamWQ):
-
-    def __str__(self):
-        return f"AdamQ: [{self.quantizers[0]}-{self.quantizers[1]}]" \
-                f"[{self.bits[0]}-{self.bits[1]}]" \
-                f"[{self.block_sizes[0]}-{self.block_sizes[1]}]"
 
     @torch.no_grad()
     def step(self, closure=None):
