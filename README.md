@@ -1,7 +1,7 @@
 
 
 <div align="center">
-  <img src="assets/logo.svg" alt="Logo">
+  <img src="assets/logo.svg" alt="Logo" style="max-width: 85%; height: auto;">
 </div>
 
 <h5 align="center">
@@ -62,5 +62,5 @@ optimizer = AdamWQ(
 
 ## Reference Code
 
-- [pytorch-optimizer](https://github.com/jettify/pytorch-optimizer/tree/master): The low-bit Adafactor and AdaBelief optimiers are based on this code.
+- [pytorch-optimizer](https://github.com/jettify/pytorch-optimizer/tree/master): We implemented the low-bit Adafactor and AdaBelief optimiers based on this code.
 

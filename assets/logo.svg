@@ -2,8 +2,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- 由 Microsoft Visio, SVG Export 生成 logo.svg Page-1 -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
-		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="2.96325in" height="1.90702in"
-		viewBox="0 0 213.354 137.305" xml:space="preserve" color-interpolation-filters="sRGB" class="st3">
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="3.14961in" height="1.45669in"
+		viewBox="0 0 226.772 104.882" xml:space="preserve" color-interpolation-filters="sRGB" class="st3">
 	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false">
 		<v:userDefs>
 			<v:ud v:nameU="msvSubprocessMaster" v:prompt="" v:val="VT4(Rectangle)"/>
@@ -14,7 +14,7 @@
 	<style type="text/css">
 	<![CDATA[
 		.st1 {fill:none;stroke:none;stroke-width:0.25}
-		.st2 {fill:#a4acc1;font-family:Sitka Small Semibold;font-size:4.99999em}
+		.st2 {fill:#a4acc1;font-family:Sitka Small Semibold;font-size:6.66666em}
 		.st3 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
 	]]>
 	</style>
@@ -26,17 +26,10 @@
 		<title>页-1</title>
 		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
 				v:shadowOffsetY="-8.50394"/>
-		<g id="shape2-1" v:mID="2" v:groupContext="shape" transform="translate(18.25,-18.25)">
-			<title>工作表.2</title>
-			<desc>SOLO</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="88.4271" cy="97.2742" width="176.86" height="80.0618"/>
-			<rect x="0" y="57.2433" width="176.854" height="80.0618" class="st1"/>
-			<text x="4.44" y="115.27" class="st2" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>SOLO</text>		</g>
-		<g id="shape4-4" v:mID="4" v:groupContext="shape" transform="translate(54.4837,-83.523)">
+		<g id="shape4-1" v:mID="4" v:groupContext="shape" transform="translate(55.1048,-65.2418)">
 			<title>工作表.4</title>
-			<rect v:rectContext="foreign" x="0" y="101.773" width="83.7885" height="35.5321" class="st1"/>
-			<image x="0" y="101.773" width="83.7885" height="35.5321" preserveAspectRatio="none" xlink:href="data:image/png;base64,
+			<rect v:rectContext="foreign" x="0" y="69.3498" width="83.7885" height="35.5321" class="st1"/>
+			<image x="0" y="69.3498" width="83.7885" height="35.5321" preserveAspectRatio="none" xlink:href="data:image/png;base64,
 						iVBORw0KGgoAAAANSUhEUgAAAroAAAEoCAYAAAC3u1LMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0
 						Ad5mH3gAAJ8WSURBVHhe7b13gBRV07f9/fP+8T7vowK7pGUjC0gGESVHCSoZRZKoCIggBlRQRAlmxZwDCiYkCiLBnDBiQATJIkZUFAQR
 						8Vbv+vqqmRqaYRd2l83UpUXP9nSe7nN+XadOnf9PHMdxHMdxHKcU4kLXcRzHcRzHKZW40HUcx3Ecx3FKJS50HcdxHMdxnFKJC13HcRzH
@@ -561,7 +554,14 @@
 						atUqWb16tXzxxRdqrM+UYyarA9sl5Vn8cdrfeT1+x3FKHgUSupAV5GDcvXu3FnAYBSZGYYSRasaMv/mO5Q6VfsZxHMdxHMdxsqLQhK7j
 						OI7jOI7jFCYudB3HcRzHcZxSiQtdx3Ecx3Ecp1TiQtdxHMdxHMcplbjQdRzHcRzHcUolLnQdx3Ecx3GcUokLXcdxHMdxHKdU4kLXcRzH
 						cRzHKZW40HUcx3Ecx3FKISL/P5sdNFGub8mBAAAAAElFTkSuQmCC"/>
-			<rect v:rectContext="foreign" x="0" y="101.773" width="83.7885" height="35.5321" class="st1"/>
+			<rect v:rectContext="foreign" x="0" y="69.3498" width="83.7885" height="35.5321" class="st1"/>
 		</g>
+		<g id="shape2-5" v:mID="2" v:groupContext="shape" transform="translate(-4.42717,-6.09451)">
+			<title>工作表.2</title>
+			<desc>SOLO</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="118.434" cy="73.3229" width="236.87" height="63.1179"/>
+			<rect x="0" y="41.764" width="236.868" height="63.1179" class="st1"/>
+			<text x="6.45" y="97.32" class="st2" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>SOLO</text>		</g>
 	</g>
 </svg>
