@@ -6,7 +6,7 @@
 
 <h5 align="center">
     <p>
-        <a href="">Paper</a> |
+        <a href="https://arxiv.org/abs/2505.00347">Paper</a> |
         <a href="https://pytorch.org/">PyTorch >= 2.3</a> |
         <a href="https://github.com/pytorch/ao/tree/main">torchao >= 0.7.0</a>
     </p>
