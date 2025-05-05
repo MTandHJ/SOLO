@@ -64,3 +64,15 @@ optimizer = AdamWQ(
 
 - [pytorch-optimizer](https://github.com/jettify/pytorch-optimizer/tree/master): We implemented the low-bit Adafactor and AdaBelief optimiers based on this code.
 
+
+
+## Citation
+
+```
+@article{xu2025solo,
+  title={Pushing the Limits of Low-Bit Optimizers: A Focus on EMA Dynamics},
+  author={Xu, Cong and Liang, Wenbin and Yu, Mo and Liu, Anan and Zhang, Ke-Yue and Ma, Lizhuang and Wang, Jianyong and Wang, Jun and Zhang, Wei},
+  journal={arXiv preprint arXiv:2505.00347},
+  year={2025}
+}
+```
