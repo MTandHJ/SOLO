@@ -23,8 +23,8 @@ def scale_tensor(input: Tensor, block_size: int, quantile: float, eps: float = 1
     shape = input.shape
 
     input = input.view(-1, block_size)
-    scale = input.amax(-1).clamp_min(eps)
-    xp = input.quantile(quantile, -1) / scale
+    scale = input.amax(-1).clamp_min_(eps)
+    xp = input.quantile(quantile, -1).div_(scale)
     input = input / scale.view(-1, 1)
     return input.view(shape), scale, xp
 
@@ -48,13 +48,13 @@ def quantize_with_alpha(input: Tensor, alpha: Tensor, bits: int = 4):
 
     logalpha = alpha.log2().view(-1, 1)
     input = input.view(logalpha.size(0), -1)
-    codes = input.log2().div(logalpha).add(
+    codes = input.log2().div_(logalpha).add_(
         torch.rand(input.size(), generator=adaq_generator, device=input.device) - 0.5
-    ).round().clip(0, 2 ** bits - 1)
+    ).round_().clip_(0, 2 ** bits - 1)
     return codes.view(shape).to(torch.uint8)
 
 def dequant_with_alpha(codes: Tensor, alpha: Tensor, scale: Tensor):
-    out = (alpha.view(-1, 1) ** codes.view(alpha.size(0), -1)).mul(scale.view(-1, 1))
+    out = (alpha.view(-1, 1) ** codes.view(alpha.size(0), -1)).mul_(scale.view(-1, 1))
     return out.view(codes.shape)
 
 def quantize_2bit_with_qmap(input: Tensor, qmap: Tensor, stochastic_rounding: bool = False):
@@ -64,17 +64,17 @@ def quantize_2bit_with_qmap(input: Tensor, qmap: Tensor, stochastic_rounding: bo
     codes += torch.where(input >= qmap[codes + 1], 1, 0)
 
     # rounding
-    codes = codes.clip(max=3)
-    codes_up = (codes + 1).clip(max=3)
+    codes = codes.clip_(max=3)
+    codes_up = (codes + 1).clip_(max=3)
     val_down = qmap[codes]
     val_up = qmap[codes_up]
     residual = input - val_down
 
     p = val_up - val_down
     if stochastic_rounding:
-        p = p.mul(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
+        p = p.mul_(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
     else:
-        p = p * 0.5
+        p *= 0.5
     codes = torch.where(residual >= p, codes_up, codes)
 
     return codes.to(torch.uint8)
@@ -88,17 +88,17 @@ def quantize_3bit_with_qmap(input: Tensor, qmap: Tensor, stochastic_rounding: bo
     codes += torch.where(input >= qmap[codes + 1], 1, 0)
 
     # rounding
-    codes = codes.clip(max=7)
-    codes_up = (codes + 1).clip(max=7)
+    codes = codes.clip_(max=7)
+    codes_up = (codes + 1).clip_(max=7)
     val_down = qmap[codes]
     val_up = qmap[codes_up]
     residual = input - val_down
 
     p = val_up - val_down
     if stochastic_rounding:
-        p = p.mul(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
+        p = p.mul_(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
     else:
-        p = p * 0.5
+        p *= 0.5
     codes = torch.where(residual >= p, codes_up, codes)
 
     return codes.to(torch.uint8)
@@ -112,17 +112,17 @@ def quantize_4bit_with_qmap(input: Tensor, qmap: Tensor, stochastic_rounding: bo
     codes += torch.where(input >= qmap[codes + 1], 1, 0)
 
     # rounding
-    codes = codes.clip(max=15)
-    codes_up = (codes + 1).clip(max=15)
+    codes = codes.clip_(max=15)
+    codes_up = (codes + 1).clip_(max=15)
     val_down = qmap[codes]
     val_up = qmap[codes_up]
     residual = input - val_down
 
     p = val_up - val_down
     if stochastic_rounding:
-        p = p.mul(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
+        p = p.mul_(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
     else:
-        p = p * 0.5
+        p *= 0.5
     codes = torch.where(residual >= p, codes_up, codes)
 
     return codes.to(torch.uint8)
@@ -140,16 +140,17 @@ def quantize_8bit_with_qmap(input: Tensor, qmap: Tensor, stochastic_rounding: bo
     codes += torch.where(input >= qmap[codes + 1], 1, 0)
 
     # rounding
-    codes_up = (codes + 1).clip(max=255)
+    codes = codes.clip_(max=255)
+    codes_up = (codes + 1).clip_(max=255)
     val_down = qmap[codes]
     val_up = qmap[codes_up]
     residual = input - val_down
 
     p = val_up - val_down
     if stochastic_rounding:
-        p = p.mul(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
+        p = p.mul_(torch.rand(residual.size(), generator=adaq_generator, device=input.device))
     else:
-        p = p * 0.5
+        p *= 0.5
     codes = torch.where(residual >= p, codes_up, codes)
 
     return codes.to(torch.uint8)
