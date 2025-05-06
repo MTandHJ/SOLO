@@ -60,6 +60,15 @@ optimizer = AdamWQ(
     - `qema`: The proposed logarithmic quantization.
 
 
+
+> [!TIP]
+> SOLO can be utilized in conjunction with the `Trainer` by specifying the `optimizer_cls_and_kwargs` parameter.
+
+
+> [!NOTE]
+> DeepSpeed may produce an excessively large tensor, leading to unexpected OOM errors caused by intermediate buffers during the quantization process. It is recommended to reduce the `sub_group_size` to mitigate this issue.
+
+
 ## Reference Code
 
 - [pytorch-optimizer](https://github.com/jettify/pytorch-optimizer/tree/master): We implemented the low-bit Adafactor and AdaBelief optimiers based on this code.
