@@ -98,7 +98,7 @@ class LowBitOptim(Optimizer):
         quantile: float = 0.1,
         block_sizes: Tuple[int] = (128, 128),
         quantizers: Tuple[str] = ('de', 'qema'),
-        min_quantizable_tensor_size: int = 0,
+        min_quantizable_tensor_size: int = 128,
     ):
         if not 0.0 <= quantile <= 1.0:
             raise ValueError("Invalid 'quantile' parameter")

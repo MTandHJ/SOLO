@@ -69,7 +69,7 @@ class AdafactorQ(LowBitOptim):
         quantile: float = 0.1,
         block_sizes: Tuple[int] = (128, 128),
         quantizers: Tuple[str] = ('de', 'qema'),
-        min_quantizable_tensor_size: int = 0,
+        min_quantizable_tensor_size: int = 128,
     ):
         if lr is not None and lr <= 0.0:
             raise ValueError("Invalid learning rate: {}".format(lr))
