@@ -45,7 +45,7 @@ optimizer = AdamWQ(
     # For rigorous probing, this value is set to 0 in paper.
     # Assigning a larger value (such as the default of 4096 in torchao) 
     # may yield more stable results.
-    min_quantizable_tensor_size = 0
+    min_quantizable_tensor_size = 128
 )
 
 ```
